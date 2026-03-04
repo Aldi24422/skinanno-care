@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skinanno Care - Official Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === RESET & GLOBAL STYLES === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* === NAVBAR === */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #f5f5f5;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            height: 70px; /* Tinggi pasti navbar untuk batas scroll */
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 24px;
+            color: #ff99a8;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            padding-bottom: 5px;
+        }
+
+        /* Style untuk menu yang aktif */
+        .nav-links li a:hover, .nav-links li a.active {
+            color: #ff99a8;
+            border-bottom: 2px solid #ff99a8;
+        }
+
+        /* === PREMIUM WHITE HERO BANNER === */
+        .premium-hero {
+            background-color: #ffffff;
+            background-image: linear-gradient(120deg, #ffffff 0%, #f7f9fc 100%);
+            padding: 80px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 550px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            width: 100%;
+            z-index: 2;
+        }
+
+        /* === DEKORASI BUNGA TERBANG KE ATAS === */
+        .decor {
+            position: absolute;
+            opacity: 0; 
+            animation: floatUp 7s ease-in-out infinite;
+            z-index: 1;
+        }
+        .decor-flower-left { top: 50%; left: 5%; font-size: 80px; animation-duration: 8s; }
+        .decor-leaf-right { top: 60%; right: 5%; font-size: 80px; animation-delay: 2s; animation-duration: 9s; }
+        .decor-flower-bottom { bottom: -50px; right: 15%; font-size: 100px; animation-delay: 4s; animation-duration: 10s; }
+
+        .hero-side-img {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 2s ease-in;
+        }
+
+        .hero-side-img img {
+            max-width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+        }
+
+        .hero-center-text {
+            flex: 1.5;
+            text-align: center;
+            padding: 0 30px;
+            animation: slideUp 1.5s ease-out;
+        }
+
+        .hero-center-text h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            letter-spacing: 4px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .hero-center-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 65px;
+            color: #111;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .hero-center-text p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .btn-black {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .btn-black:hover {
+            background-color: #ff99a8;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(255, 153, 168, 0.3);
+        }
+
+        /* === HORIZONTAL SCROLLING PRODUCT GRID === */
+        .shop-container {
+            width: 100%;
+            background-color: #fff;
+            position: relative;
+        }
+        
+        .interactive-shop {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; 
+        }
+        .interactive-shop::-webkit-scrollbar { display: none; }
+
+        .product-col {
+            flex: 0 0 33.333%;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            text-align: center;
+            scroll-snap-align: start;
+        }
+
+        /* Pastel Background Variations */
+        .bg-1 { background-color: #2b3a4a; color: #fff; }
+        .bg-2 { background-color: #ffd1dc; color: #333; }
+        .bg-3 { background-color: #d5c4b3; color: #333; }
+        .bg-4 { background-color: #e0f7fa; color: #333; }
+        .bg-5 { background-color: #f3e5f5; color: #333; }
+        .bg-6 { background-color: #fff9c4; color: #333; }
+        .bg-7 { background-color: #ffccbc; color: #333; }
+        .bg-8 { background-color: #c8e6c9; color: #333; }
+        .bg-9 { background-color: #dcedc8; color: #333; }
+        .bg-10 { background-color: #ffecb3; color: #333; }
+
+        .product-col h3 { font-size: 20px; margin-bottom: 30px; font-weight: 600; z-index: 2; }
+        
+        .product-real-img {
+            max-width: 200px;
+            max-height: 250px;
+            transition: transform 0.4s ease;
+            z-index: 2;
+            margin-bottom: 20px;
+        }
+
+        .product-desc {
+            font-size: 14px;
+            max-width: 250px;
+            line-height: 1.6;
+            opacity: 0.8;
+            z-index: 2;
+            transition: transform 0.4s ease;
+        }
+
+        .add-to-cart {
+            position: absolute;
+            bottom: -60px; 
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            opacity: 0;
+            z-index: 3;
+        }
+
+        .product-col:hover .product-real-img { transform: translateY(-20px); }
+        .product-col:hover .product-desc { transform: translateY(-10px); }
+        .product-col:hover .add-to-cart { bottom: 40px; opacity: 1; }
+        .add-to-cart:hover { background-color: #ff99a8; color: white; }
+
+        /* CIRCULAR ARROWS DENGAN BACKGROUND PUTIH */
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #ff99a8; 
+            background-color: #ffffff; 
+            width: 50px;
+            height: 50px;
+            border-radius: 50%; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
+            cursor: pointer;
+            z-index: 10;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-arrow:hover { 
+            background-color: #ff99a8; 
+            color: #ffffff; 
+            transform: translateY(-50%) scale(1.1); 
+        }
+        
+        .arrow-left { left: 20px; }
+        .arrow-right { right: 20px; }
+
+        /* === CLEAN BEAUTY SECTION === */
+        .clean-beauty { padding: 80px 50px; text-align: center; background-color: #ffffff; }
+        .clean-beauty-title h2 { font-size: 28px; letter-spacing: 2px; margin-bottom: 10px; }
+        .clean-beauty-title p { color: #777; margin-bottom: 40px; }
+        
+        .image-panels {
+            display: flex; gap: 15px; max-width: 1100px; height: 450px; margin: 0 auto;
+        }
+        .panel {
+            flex: 1; background-size: cover; background-position: center; border-radius: 10px;
+            position: relative; transition: flex 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer; overflow: hidden;
+        }
+        .panel-1 { background-image: url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=800'); }
+        .panel-2 { background-image: url('https://images.unsplash.com/photo-1542224566-6e85f2e6772f?q=80&w=800'); }
+        .panel-3 { background-image: url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?q=80&w=800'); }
+        
+        .panel::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+            opacity: 0.5; transition: opacity 0.4s;
+        }
+        .panel-text {
+            position: absolute; bottom: 20px; left: 20px; color: white;
+            font-size: 18px; font-weight: 600; opacity: 0; transform: translateY(20px);
+            transition: all 0.5s ease; z-index: 2;
+        }
+        .panel:hover { flex: 2.5; }
+        .panel:hover::after { opacity: 1; }
+        .panel:hover .panel-text { opacity: 1; transform: translateY(0); }
+
+        /* === CONTACT SECTION === */
+        .contact { padding: 70px 50px; background-color: #fff0f5; text-align: center; }
+        .contact h2 { margin-bottom: 40px; color: #333; font-size: 28px; }
+        
+        .contact-container {
+            display: flex; justify-content: center; gap: 50px; max-width: 900px;
+            margin: 0 auto; text-align: left; flex-wrap: wrap;
+        }
+        .contact-info {
+            flex: 1; min-width: 250px; background: #ffffff; padding: 30px;
+            border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .contact-info p { margin-bottom: 20px; font-size: 16px; color: #555; }
+        
+        .contact-form {
+            flex: 2; min-width: 300px; display: flex; flex-direction: column; gap: 15px;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%; padding: 15px; border: 1px solid #ffb6c1;
+            border-radius: 10px; outline: none; transition: border-color 0.3s;
+        }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: #ff99a8; }
+        .contact-form textarea { height: 120px; resize: none; }
+        
+        /* === FOOTER === */
+        footer {
+            text-align: center; padding: 30px; background-color: #ffffff;
+            color: #888; font-size: 14px;
+        }
+
+        /* === KEYFRAMES === */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Animasi Terbang ke Atas */
+        @keyframes floatUp {
+            0% { transform: translateY(100px) rotate(-10deg) scale(0.9); opacity: 0; }
+            20% { opacity: 0.9; }
+            80% { opacity: 0.9; }
+            100% { transform: translateY(-200px) rotate(20deg) scale(1.1); opacity: 0; }
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 768px) {
+            .hero-layout { flex-direction: column; text-align: center; }
+            .hero-side-img { display: none; }
+            .hero-center-text h1 { font-size: 40px; }
+            .product-col { flex: 0 0 100%; }
+            .navbar { flex-direction: column; gap: 15px; height: auto; }
+            .image-panels { flex-direction: column; height: auto; }
+            .panel { height: 150px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="logo">SKINANNO</div>
+        <ul class="nav-links">
+            <li><a href="#home" class="active">HOME</a></li>
+            <li><a href="#shop">SHOP</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <header id="home" class="premium-hero">
+        <div class="decor decor-flower-left">🪷</div>
+        <div class="decor decor-leaf-right">🌿</div>
+        <div class="decor decor-flower-bottom">🌸</div>
+
+        <div class="hero-layout">
+            <div class="hero-side-img">
+                <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=400&auto=format&fit=crop" style="border-radius: 50%; opacity: 0.9;" alt="Model">
+            </div>
+
+            <div class="hero-center-text">
+                <h4>EXCLUSIVE</h4>
+                <h1>SKINCARE</h1>
+                <p>Discover effective solutions for healthier, brighter skin. Specially formulated with safe, clinically tested ingredients.</p>
+                <button class="btn-black" onclick="document.querySelector('.nav-links a[href=\'#shop\']').click()">SHOP NOW</button>
+            </div>
+
+            <div class="hero-side-img">
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400&auto=format&fit=crop" style="border-radius: 20px;" alt="Products">
+            </div>
+        </div>
+    </header>
+
+    <div id="shop" class="shop-container">
+        <span class="scroll-arrow arrow-left" id="scroll-prev">←</span>
+        <span class="scroll-arrow arrow-right" id="scroll-next">→</span>
+
+        <section class="interactive-shop" id="scroll-area">
+            
+            <div class="product-col bg-1">
+                <h3 style="color: #fff;">Skinanno Radiance Ampoule</h3>
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400&auto=format&fit=crop" alt="Skinanno Radiance Ampoule" class="product-real-img">
+                <p class="product-desc" style="color: #ddd;">A lightweight radiance ampoule that instantly brightens and evens out tone.</p>
+                <button class="add-to-cart" onclick="alert('Added to Cart!')">Add to Cart $18.50</button>
+            </div>
+
+            <div class="product-col bg-2">
+                <h3>Skinanno Gentle Hydrator</h3>
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400&auto=format&fit=crop" alt="Skinanno Gentle Hydrator" class="product-real-img">
+                <p class="product-desc">A pH-balanced daily cleanser that removes impurities without stripping moisture.</p>
+                <button class="add-to-cart" onclick="alert('Added to Cart!')">Add to Cart $12.00</button>
+            </div>
+
+            <div class="product-col bg-3">
+                <h3>Skinanno Barrier Cream</h3>
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400&auto=format&fit=crop" alt="Skinanno Barrier Cream" class="product-real-img">
+                <p class="product-desc">A rich moisturizer designed to lock in hydration and repair the skin barrier.</p>
+                <button class="add-to-cart" onclick="alert('Added to Cart!')">Add to Cart $22.50</button>
+            </div>
+
+            <div class="product-col bg-4">
+                <h3>Skinanno UV Shield SPF 50</h3>
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400&auto=format&fit=crop" alt="Skinanno UV Shield" class="product-real-img">
+                <p class="product-desc">A broad-spectrum sunscreen that protects your skin from harmful UV rays without white cast.</p>
+                <button class="add-to-cart" onclick="alert('Added to Cart!')">Add to Cart $16.80</button>
+            </div>
+
+            <div class="product-col bg-5">
+                <h3>Skinanno Exfoliating Drops</h3>
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400&auto=format&fit=crop" alt="Skinanno Exfoliating Drops" class="product-real-img">
+                <p class="product-desc">A gentle BHA toner that minimizes pores and smooths skin texture.</p>
+                <button class="add-to-cart" onclick="alert('Added to Cart!')">Add to Cart $14.50</button>
+            </div>
+
+            <div class="product-col bg-6">
+                <h3>Skinanno Vitamin C Elixir</h3>
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400&auto=format&fit=crop" alt="Skinanno Vitamin C Elixir" class="product-real-img">
+                <p class="product-desc">A potent antioxidant serum that fades dark spots and boosts radiance.</p>
+                <button class="add-to-cart" onclick="alert('Added to Cart!')">Add to Cart $19.90</button>
+            </div>
+
+            <div class="product-col bg-7">
+                <h3>Skinanno Peptide Treatment</h3>
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400&auto=format&fit=crop" alt="Skinanno Peptide Treatment" class="product-real-img">
+                <p class="product-desc">A nourishing treatment that reduces the appearance of fine lines and dark circles.</p>
+                <button class="add-to-cart" onclick="alert('Added to Cart!')">Add to Cart $21.00</button>
+            </div>
+
+            <div class="product-col bg-8">
+                <h3>Skinanno Purifying Mask</h3>
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400&auto=format&fit=crop" alt="Skinanno Purifying Mask" class="product-real-img">
+                <p class="product-desc">A deep-cleansing clay mask that absorbs excess oil and detoxifies pores.</p>
+                <button class="add-to-cart" onclick="alert('Added to Cart!')">Add to Cart $15.50</button>
+            </div>
+
+            <div class="product-col bg-9">
+                <h3>Skinanno Hydrating Mist</h3>
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400&auto=format&fit=crop" alt="Skinanno Hydrating Mist" class="product-real-img">
+                <p class="product-desc">A cooling water gel mist that provides an instant burst of hydration.</p>
+                <button class="add-to-cart" onclick="alert('Added to Cart!')">Add to Cart $20.00</button>
+            </div>
+
+            <div class="product-col bg-10">
+                <h3>Skinanno Overnight Recovery</h3>
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400&auto=format&fit=crop" alt="Skinanno Overnight Recovery" class="product-real-img">
+                <p class="product-desc">A leave-on recovery treatment that soothes and moisturizes for softer skin overnight.</p>
+                <button class="add-to-cart" onclick="alert('Added to Cart!')">Add to Cart $11.00</button>
+            </div>
+
+        </section>
+    </div>
+
+    <section id="about" class="clean-beauty">
+        <div class="clean-beauty-title">
+            <h2>CLEAN BEAUTY IN BALANCE</h2>
+            <p>What touches your skin beautifully should touch the world with kindness.</p>
+        </div>
+        <div class="image-panels">
+            <div class="panel panel-1"><div class="panel-text">From Nature, With Intention</div></div>
+            <div class="panel panel-2"><div class="panel-text">Kindness Begins Here</div></div>
+            <div class="panel panel-3"><div class="panel-text">In Harmony With The Earth</div></div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <p>📍 Surabaya, East Java, Indonesia</p>
+                <p>📞 +62 812 3456 7890</p>
+                <p>✉️ hello@anno.tech</p>
+            </div>
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Write your message here..." required></textarea>
+                <button type="submit" class="btn-black">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 Skinanno Care (by King Aldi). All rights reserved.
+    </footer>
+
+    <script>
+        // 1. Panah Horizontal Scroll
+        const scrollContainer = document.getElementById('scroll-area');
+        const prevArrow = document.getElementById('scroll-prev');
+        const nextArrow = document.getElementById('scroll-next');
+
+        prevArrow.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: -scrollContainer.offsetWidth / 3, behavior: 'smooth' });
+        });
+
+        nextArrow.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: scrollContainer.offsetWidth / 3, behavior: 'smooth' });
+        });
+
+        // 2. Smooth Scroll saat klik menu (Mencegah tertutup Navbar)
+        const navLinks = document.querySelectorAll(".nav-links li a");
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // Matikan efek lompat bawaan HTML
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if(targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 70, // 70px adalah tinggi Navbar
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 3. ScrollSpy (Auto-Active Menu) yang Pasti Nyala
+        const sections = document.querySelectorAll("#home, #shop, #about, #contact");
+
+        window.addEventListener("scroll", () => {
+            let current = "home"; // Setel ke Home dari awal
+            const scrollPos = window.scrollY;
+
+            sections.forEach((section) => {
+                // Kurangi 150 agar deteksi lebih awal dan responsif
+                if (scrollPos >= section.offsetTop - 150) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            // Trik Jitu: Paksa nyala ke 'contact' jika sudah scroll mentok sampai bawah
+            if ((window.innerHeight + Math.round(scrollPos)) >= document.body.offsetHeight - 50) {
+                current = "contact";
+            }
+
+            // Ganti warna menu yang aktif
+            navLinks.forEach((link) => {
+                link.classList.remove("active");
+                if (link.getAttribute("href") === `#${current}`) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

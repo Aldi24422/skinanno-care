@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover effective solutions for healthier, brighter skin. Specially formulated with safe, clinically tested ingredients.">
     <title>Skinanno Care - Official Website</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
@@ -64,6 +67,23 @@
             color: #ff99a8;
             border-bottom: 2px solid #ff99a8;
         }
+
+        /* Menu Toggle (Hamburger) */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
 
         /* === PREMIUM WHITE HERO BANNER === */
         .premium-hero {
@@ -361,9 +381,43 @@
             .hero-side-img { display: none; }
             .hero-center-text h1 { font-size: 40px; }
             .product-col { flex: 0 0 100%; }
-            .navbar { flex-direction: column; gap: 15px; height: auto; }
+            
+            /* Navbar Mobile Styles */
+            .navbar {
+                padding: 15px 20px;
+                flex-wrap: wrap; /* allow wrapping for expanded menu */
+            }
+            .menu-toggle {
+                display: flex;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                gap: 15px;
+                padding-top: 20px;
+                padding-bottom: 10px;
+                background-color: #ffffff;
+                animation: slideDown 0.3s ease-out forwards;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            
+            /* Toggle Animation */
+            .menu-toggle.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); background-color: #ff99a8;}
+            .menu-toggle.is-active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); background-color: #ff99a8;}
+            
             .image-panels { flex-direction: column; height: auto; }
             .panel { height: 150px; }
+            .contact-container { flex-direction: column; gap: 30px; }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -371,7 +425,12 @@
 
     <nav class="navbar" id="navbar">
         <div class="logo">SKINANNO</div>
-        <ul class="nav-links">
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="nav-links">
             <li><a href="#home" class="active">HOME</a></li>
             <li><a href="#shop">SHOP</a></li>
             <li><a href="#about">ABOUT</a></li>
@@ -528,6 +587,15 @@
             scrollContainer.scrollBy({ left: scrollContainer.offsetWidth / 3, behavior: 'smooth' });
         });
 
+        // Toggle Mobile Menu
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinksContainer = document.getElementById('nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('is-active');
+            navLinksContainer.classList.toggle('active');
+        });
+
         // 2. Smooth Scroll saat klik menu (Mencegah tertutup Navbar)
         const navLinks = document.querySelectorAll(".nav-links li a");
         
@@ -537,6 +605,12 @@
                 const targetId = this.getAttribute('href').substring(1);
                 const targetSection = document.getElementById(targetId);
                 
+                // Menutup menu mobile setelah link diklik (opsional, UX lebih baik)
+                if (navLinksContainer.classList.contains('active')) {
+                    menuToggle.classList.remove('is-active');
+                    navLinksContainer.classList.remove('active');
+                }
+
                 if(targetSection) {
                     window.scrollTo({
                         top: targetSection.offsetTop - 70, // 70px adalah tinggi Navbar
